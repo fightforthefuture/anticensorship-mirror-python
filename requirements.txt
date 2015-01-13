@@ -6,4 +6,5 @@ argparse==1.2.1
 ipaddr==2.1.11
 itsdangerous==0.24
 maxminddb==1.1.1
+uWSGI==2.0.9
 wsgiref==0.1.2
