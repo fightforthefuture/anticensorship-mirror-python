@@ -34,7 +34,9 @@ def mirror():
     import urllib
 
     ip = fix_ip(request.headers.get('x-forwarded-for', request.remote_addr))
-    ip = '1.92.0.14' # China
+
+    if request.values.get('force_locale') == 'CN':
+        ip = '1.92.0.14' # China
 
     reader = maxminddb.open_database('GeoLite2-City.mmdb')
     result = reader.get(ip)
