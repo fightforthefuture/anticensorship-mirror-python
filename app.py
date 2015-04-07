@@ -29,31 +29,59 @@ def fix_ip(ip_address):
 @app.route('/', methods=['GET', 'POST'])
 @crossdomain(origin='*')
 def mirror():
-    """Test"""
+    """Get the encrypted anti-censorship data from Mothership"""
 
     import urllib
 
+    v = request.values.get
     ip = fix_ip(request.headers.get('x-forwarded-for', request.remote_addr))
-
-    if request.values.get('force_locale') == 'CN':
-        ip = '1.92.0.14' # China
 
     reader = maxminddb.open_database('GeoLite2-City.mmdb')
     result = reader.get(ip)
     reader.close()
 
-    if result and result.get('country'):
-    
-        link = "%s/%s?api_key=%s&domain=%s" % (MOTHERSHIP_URL,
-               result.get("country").get('iso_code'), os.environ.get('API_KEY'),
-               os.environ.get('DOMAIN'))
-        print link
+    if v("_ac_force_locale") or (result and result.get('country')):
+
+        locale = v("_ac_force_locale") if v("_ac_force_locale") else \
+                 result.get("country").get('iso_code')
+
+        link = "%s/%s?api_key=%s&domain=%s&user_key=%s" % (MOTHERSHIP_URL,
+               locale, os.environ.get('API_KEY'), os.environ.get('DOMAIN'),
+               v("key"))
 
         f = urllib.urlopen(link)
         encrypted_data = f.read()
         return encrypted_data
 
     return ""
+
+@app.route('/report', methods=['POST'])
+@crossdomain(origin='*')
+def report():
+    """Report something sketchy back to Mothership"""
+
+    import urllib
+    import requests
+
+    v = request.values.get
+    ip = fix_ip(request.headers.get('x-forwarded-for', request.remote_addr))
+
+    reader = maxminddb.open_database('GeoLite2-City.mmdb')
+    result = reader.get(ip)
+    reader.close()
+
+    payload = {
+        'ip': ip,
+        'host': v('host'),
+        'response': v('response')
+    }
+    if result and result.get('country'):
+        payload['locale'] = result.get("country").get('iso_code')
+
+    r = requests.post(MOTHERSHIP_URL + "/report", data=payload)
+    print r.text
+
+    return "kthx"
 
 @app.route('/helo', methods=['GET'])
 @crossdomain(origin='*')
