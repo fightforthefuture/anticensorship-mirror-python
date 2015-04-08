@@ -1,5 +1,5 @@
-Internet Defense League Anti-Censorship Mirror
-==============================================
+Internet Defense League Anti-Censorship Mirror (Python app)
+===========================================================
 
 This project contains a simple Python Flask app to run an
 [Anti-Censorship Network Mirror][1]. Run this app on your server and make the
