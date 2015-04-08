@@ -11,6 +11,10 @@ can run it on any Python server.
 
 1. **[Sign up for an API Key][1]**
 2. Deploy the app to Heroku (or your own server)
+
+   If you deploy to your own server, please run the `make` command to grab the
+   [MaxMind GeoLite2 geolocation database][2].
+
 3. Configure your environment variables with the following definitions:
 
    ```
@@ -39,3 +43,4 @@ There are tons of other ways to get involved with the Anti-Censorship Network.
 To learn more, visit https://www.internetdefenseleague.org/censorship/
 
 [1]: https://www.internetdefenseleague.org/censorship/mirror
+[2]: http://dev.maxmind.com/geoip/geoip2/geolite2/
