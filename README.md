@@ -35,7 +35,9 @@ can run it on any Python server.
 
    heroku config:set SECRET_KEY=bar
    ```
-4. Drink a beer (or a non-alcoholic beverage), you're done.
+4. Restart server if needed.
+
+5. Drink a beer (or a non-alcoholic beverage), you're done.
 
 ### More information
 
