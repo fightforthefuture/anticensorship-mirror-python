@@ -35,9 +35,26 @@ can run it on any Python server.
 
    heroku config:set SECRET_KEY=bar
    ```
-4. Restart server if needed.
+4. Restart server if needed. You're done!
 
-5. Drink a beer (or a non-alcoholic beverage), you're done.
+### How to test:
+
+Simply visit the URL for your server in a browser
+(eg. https://anticensorship-mirror.herokuapp.com ). If everything is working,
+you should see a weird looking binary response like this:
+
+```
+W6¼Bv¯zo{`¼8>¿Zcü]Má¥w01»ÜìØñ¤EoýØ³õLo©ãë^æóíÛ¼ë5"gQË|9Ü`YK;g=YÖ?éïË.ëãüEÙZaÔúå<"]ú¶! û¶w¬¥ÊômxÈÛý·X*ÝAä%? Ö?ÖßuiùÒ&'ñnaÛâÈìZ>vÏ¨ áUGØÛ2É÷nád¹/ÁËÌôtJ®ç÷ JÍÂm"NîÀ*Z(ø¨1¡b/ð<Ð®FF_V/lÒLò0j9Ó:X83RPÐêÃØå£Ù
+```
+
+This is the encrypted data that allows sites that embed the ACN JavaScript
+code to communicate with the Network's central server. Essentially your Mirror
+is a proxy server, and because the data is RSA-encrypted and digitally signed,
+it's impossible to tamper with mid-stream. This protects the data against
+government censors and malicious Mirror servers.
+
+You can see that the response changes if you pass the parameter
+`?_ac_force_locale=CN`.
 
 ### More information
 
